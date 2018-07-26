@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/commonn.css">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-11.5 col-md-offset-0.5 col-sm-12">
+
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">添加数据</h3>
+                </div>
+                <div class="panel-body">
+                    {% include "stark/tag.html" %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function show_option(pop_back_id, pk, text) {
+        console.log(pop_back_id, pk, text);
+
+        var option = document.createElement('option');
+        option.innerHTML = text;
+        option.value = pk;
+        option.selected = 'selected';
+
+        select = document.getElementById(pop_back_id);
+        select.appendChild(option);
+    }
+
+</script>
+
+</body>
+</html>

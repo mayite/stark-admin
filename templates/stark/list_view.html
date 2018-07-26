@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7/css/bootstrap.min.css">
+    <style>
+        .container {
+            margin-top: 60px;
+        }
+
+        .panel-default {
+            margin: 20px;
+        }
+
+        form {
+            margin-top: 15px;
+            margin-left: 15px;
+            margin-bottom: 20px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 col-md-offset-0.5">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <span class="panel-title ">查看数据 </span>
+                    <span class="panel-title pull-right"><a href="{{ add_url }}">添加数据</a></span>
+                </div>
+                {% if show_list.config_obj.search_fields %}
+                    <form class="form-inline form-board">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="v"
+                                       value="{{ show_list.config_obj.key_word }}" placeholder="请输入关键字">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-info">搜索</button>
+                    </form>
+                {% endif %}
+
+                <form action="" class="form-inline" method="post">
+                    {% csrf_token %}
+                    <select name="action" class="form-control">
+                        <option>---------------------------</option>
+                        {% for func_dict in show_list.get_actions %}
+                            <option value="{{ func_dict.name }}">{{ func_dict.desc }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" class="btn btn-info" style="">
+                    <div class="panel-body">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                            <tr>
+                                {% for item in show_list.get_header %}
+                                    <td>{{ item }}</td>
+                                {% endfor %}
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for data  in show_list.get_body %}
+                                <tr>
+                                    {% for foo in data %}
+                                        <td>{{ foo }}</td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div>
+
+
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        {{ show_list.pagination.page_html|safe }}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="col-md-3 col-md-offset-9.5">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-center">按选项查找</h3>
+                </div>
+
+                {% for key,val in show_list.get_filter_links.items %}
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">By {{ key|upper }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            {% for link in val %}
+                                <p>{{ link|safe }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+</html>
